@@ -1,0 +1,1 @@
+# botw-hyrule-compendium
