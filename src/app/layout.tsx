@@ -1,7 +1,9 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import './styles/globals.css'
+import * as fonts from './styles/fonts'
 
-const inter = Inter({ subsets: ['latin'] })
+const fontsVariables = Object.values(fonts)
+  .map((font) => font.variable)
+  .join(' ')
 
 export const metadata = {
   title: 'Hyrule Compendium',
@@ -14,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={fontsVariables}>
+      <body className="font-sans">{children}</body>
     </html>
   )
 }
