@@ -1,0 +1,15 @@
+# Ignore build output directories
+
+
+# Ignore dependency directories
+node_modules/
+
+# Ignore specific files
+.devcontainer/
+.next/
+package-lock.json
+pnpm-lock.yaml
+
+# Ignore configuration files
+.prettierignore
+.eslint*
