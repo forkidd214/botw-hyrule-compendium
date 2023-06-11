@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  entries   Entry[]
+}
+
+model Image {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  src       String
+  width     Int
+  height    Int
+  entry     Entry?
+}
+
+model Entry {
+  // common fields
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String
+  description     String
+  image           Image?   @relation(fields: [imageId], references: [id])
+  imageId         String?  @unique @db.ObjectId
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      String   @db.ObjectId
+  commonLocations String[]
+  // optional fields
+  drops           String[] @default([]) // creatures/monsters non-nullable
+  edible          Boolean? // creatures
+  attack          Int? // equipment
+  defense         Int? // equipment
+  heartsRecovered Float? // materials
+  cookingEffect   String? // materials
+}

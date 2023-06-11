@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Home() {
   return (
     <main>
@@ -10,6 +12,12 @@ export default function Home() {
         surroundings, so it seldom appears before people. It&apos;s sometimes
         known by its other name, Satori.
       </p>
+      <Link
+        href="/compendium"
+        className="mt-4 inline-block rounded-md bg-teal-700 px-3 py-2 text-base font-medium hover:bg-teal-900 hover:text-white"
+      >
+        GO TO COMPENDIUM
+      </Link>
     </main>
   )
 }

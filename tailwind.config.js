@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       fontFamily: {
         hylia: ['var(--font-hylia)', ...defaultTheme.fontFamily.serif],
+        sheikah: ['var(--font-sheikah)', ...defaultTheme.fontFamily.mono],
         sans: ['var(--font-signika)', ...defaultTheme.fontFamily.sans],
       },
     },

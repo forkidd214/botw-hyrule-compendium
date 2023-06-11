@@ -7,9 +7,15 @@ const signika = Signika({
 })
 
 const hylia = localFont({
-  src: './HyliaSerifBeta-Regular.woff2',
+  src: './hyliaSerifBeta-regular.woff2',
   variable: '--font-hylia',
   weight: '400',
 })
 
-export { signika, hylia }
+const sheikah = localFont({
+  src: './sheikah-complete.woff2',
+  variable: '--font-sheikah',
+  weight: '400',
+})
+
+export { signika, hylia, sheikah }
