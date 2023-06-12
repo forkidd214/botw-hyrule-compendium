@@ -1,9 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import Logo from '@/components/Logo'
 
 export default function Home() {
   return (
-    <main>
-      <h1 className="mb-4 font-hylia text-4xl">Hyrule Compendium</h1>
+    <div className="max-w-md">
+      <Link
+        href="/compendium"
+        className="flex w-full items-center justify-evenly gap-8 rounded-md bg-slate-900 px-8"
+      >
+        <Image
+          src="/images/sheikah-slate.png"
+          width={96}
+          height={96}
+          alt="sheikah slate"
+        />
+        <Logo>Compendium</Logo>
+      </Link>
+
       <h3 className="font-semibold">Lord of the Mountain</h3>
       <p className="">
         This noble creature watches over all animals that make their homes in
@@ -18,6 +32,6 @@ export default function Home() {
       >
         GO TO COMPENDIUM
       </Link>
-    </main>
+    </div>
   )
 }

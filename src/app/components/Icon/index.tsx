@@ -1,7 +1,7 @@
 import {
   PlayIcon,
   MagnifyingGlassIcon,
-  ArchiveBoxIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid'
 import { JSX, SVGProps, RefAttributes } from 'react'
 
@@ -12,7 +12,7 @@ type HeroIconPropsType = JSX.IntrinsicAttributes &
   } & RefAttributes<SVGSVGElement>
 
 type IconPropsType = HeroIconPropsType & {
-  id: 'backward' | 'search' | 'box'
+  id: 'backward' | 'search' | 'x-mark'
 }
 
 const icons = {
@@ -24,8 +24,8 @@ const icons = {
     Component: MagnifyingGlassIcon,
     preClassName: '',
   },
-  box: {
-    Component: ArchiveBoxIcon,
+  'x-mark': {
+    Component: XMarkIcon,
     preClassName: '',
   },
 }
@@ -39,7 +39,7 @@ const Icon = ({ id, className, ...props }: IconPropsType) => {
 
   return (
     <Component
-      className={`stroke-current stroke-2 ${preClassName} ${className}`}
+      className={`stroke-current stroke-1 ${preClassName} ${className}`}
       {...props}
     />
   )

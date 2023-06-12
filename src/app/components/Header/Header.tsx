@@ -9,7 +9,7 @@ export default function Header() {
   const isCompendiumPage = pathname === '/compendium'
 
   return (
-    <header className="flex items-center border-b-2 py-4">
+    <header className="flex items-center border-b-2 border-b-yellow-50/75 py-4">
       {isCompendiumPage ? <CompendiumHeader /> : <Logo>Guide of the Wild</Logo>}
     </header>
   )

@@ -7,7 +7,7 @@ const signika = Signika({
 })
 
 const hylia = localFont({
-  src: './hyliaSerifBeta-regular.woff2',
+  src: './hylia-serif-beta-regular.woff2',
   variable: '--font-hylia',
   weight: '400',
 })
