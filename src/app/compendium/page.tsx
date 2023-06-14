@@ -1,6 +1,6 @@
 import { type Entry, useEntriesByCategory, dynamic } from '../utils/entries'
-import Tabs from '@/components/Tabs'
-import Card from '@/components/Card'
+import Tabs from '@/app/components/Tabs.deprecated'
+import EntryModal from '@/components/EntryModal'
 
 export { dynamic }
 
@@ -21,7 +21,7 @@ export default async function Compendium() {
       {Array(3)
         .fill(entry)
         .map((entry, index) => (
-          <Card key={`key-${index}`} entry={entry} />
+          <EntryModal key={`key-${index}`} entry={entry} />
         ))}
     </div>
   )

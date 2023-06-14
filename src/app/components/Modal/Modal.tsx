@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent, useRef, useState, useEffect, useCallback } from 'react'
+import { MouseEvent, useRef, useEffect, useCallback } from 'react'
 
 type ModalPropsType = {
   isOpen: boolean
@@ -46,7 +46,7 @@ export default function Modal({
         !isClickedWithinDialog(e) && onClose()
       }}
       onClose={onClose}
-      className={`max-w-fit backdrop:bg-black/30 backdrop:backdrop-blur-sm ${className}`}
+      className={`max-w-fit backdrop:bg-white/20  ${className}`}
     >
       {children}
     </dialog>
