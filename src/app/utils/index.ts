@@ -4,6 +4,6 @@ export function toPascalCase(input: string): string {
   })
 }
 
-export function joinClassNames(...classes: string[]) {
+export function joinClassNames(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(' ')
 }

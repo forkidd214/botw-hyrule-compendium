@@ -31,7 +31,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/components/Logo/index.jsx"
+    "src/app/components/Logo/index.jsx",
+    "src/app/components/Tabs.deprecated/.d.ts"
   ],
   "exclude": ["node_modules"]
 }
