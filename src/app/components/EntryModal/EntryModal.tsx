@@ -60,15 +60,16 @@ const ModalTrigger = ({ entry, onOpen }: ModalTriggerPropsType) => {
       )}
     >
       <figure className="flex h-full items-center gap-4">
-        <div className="relative aspect-square h-full overflow-hidden rounded-md">
+        <div className="relative aspect-square h-full flex-shrink-0 overflow-hidden rounded-md">
           <Image
             alt="" // refer to adjacent text <figcaption>{name}</figcaption>
             src={image.src}
             fill
+            sizes={image.width + 'px'}
             className="object-cover"
           />
         </div>
-        <figcaption id={id} className="text-xl font-medium">
+        <figcaption id={id} className="text-left text-xl font-medium">
           {toPascalCase(name)}
         </figcaption>
       </figure>
@@ -77,7 +78,17 @@ const ModalTrigger = ({ entry, onOpen }: ModalTriggerPropsType) => {
 }
 
 const ModalPanel = ({ entry, onClose }: ModalPanelPropsType) => {
-  const { name, description, image, commonLocations } = entry
+  const {
+    name,
+    description,
+    image,
+    commonLocations,
+    drops,
+    cookingEffect,
+    heartsRecovered,
+    attack,
+    defense,
+  } = entry
 
   return (
     <figure className="flex flex-col gap-4">
@@ -92,7 +103,7 @@ const ModalPanel = ({ entry, onClose }: ModalPanelPropsType) => {
           <Icon id="x-mark" />
         </button>
       </div>
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <section className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div
           className={`relative aspect-square min-w-[160px] overflow-hidden rounded-md`}
         >
@@ -100,11 +111,18 @@ const ModalPanel = ({ entry, onClose }: ModalPanelPropsType) => {
             alt="" // refer to adjacent text <Logo>{name}</Logo>
             src={image.src}
             fill
+            sizes={image.width + 'px'}
             className="object-cover"
           />
         </div>
         <p className="text-justify text-xl font-thin ">{description}</p>
-      </div>
+      </section>
+      <section>{drops ? drops : 'drops'}</section>
+      <section>{cookingEffect ? cookingEffect : 'cookingEffect'}</section>
+      <section>{heartsRecovered ? heartsRecovered : 'heartsRecovered'}</section>
+      <section>{attack ? attack : 'attack'}</section>
+      <section>{defense ? defense : 'defense'}</section>
+      <section>{commonLocations ? commonLocations : 'commonLocations'}</section>
     </figure>
   )
 }
