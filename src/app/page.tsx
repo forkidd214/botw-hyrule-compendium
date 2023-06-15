@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/components/Logo'
 import { joinClassNames } from './utils'
-import Tabs from '@/components/Tabs/TestTabs'
 
 export default function Home() {
   return (
@@ -24,9 +23,6 @@ export default function Home() {
         />
         <Logo>Compendium</Logo>
       </Link>
-      <div className="mt-8">
-        <Tabs />
-      </div>
     </div>
   )
 }

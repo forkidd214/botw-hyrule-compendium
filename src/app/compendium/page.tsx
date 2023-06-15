@@ -1,58 +1,42 @@
-import { type Entry, useEntriesByCategory, dynamic } from '../utils/entries'
-import Tabs from '@/app/components/Tabs.deprecated'
-import EntryModal from '@/components/EntryModal'
+import { type Entry, useEntries, dynamic } from '../utils/entries'
+import EntryTabs from '@/components/EntryTabs'
 
 export { dynamic }
 
 export default async function Compendium() {
-  // const { loading, error, data } = await useEntriesByCategory({ name: 'food' })
+  // const { loading, error, data } = await useEntries()
 
   // if (loading) return <div>Loading...</div>
   // if (error) throw new Error('error')
 
-  // const {
-  //   category: { entries },
-  // } = data
+  // const { entries } = data as { entries: Entry[] }
+  const entries = ENTRIES
 
-  // console.log(entries)
+  const entriesByCategoryMap: { [key: string]: Entry[] } = {
+    creatures: [],
+    monsters: [],
+    materials: [],
+    equipment: [],
+  }
+  entries.forEach((entry) => {
+    const {
+      category: { name: categoryName },
+    } = entry
+
+    if (['animals', 'food'].includes(categoryName)) {
+      entriesByCategoryMap['creatures'].push(entry)
+    } else if (['monsters', 'materials', 'equipment'].includes(categoryName)) {
+      entriesByCategoryMap[categoryName].push(entry)
+    }
+  })
+
+  const entriesByCategoryList = Object.values(entriesByCategoryMap)
 
   return (
-    <div className="grid max-w-full auto-rows-[72px]  grid-cols-[repeat(auto-fit,minmax(min(250px,100%),1fr))] gap-2">
-      {Array(3)
-        .fill(entry)
-        .map((entry, index) => (
-          <EntryModal key={`key-${index}`} entry={entry} />
-        ))}
-    </div>
+    <>
+      <EntryTabs entriesByCategoryList={entriesByCategoryList} />
+    </>
   )
-}
-
-const entry: Entry = {
-  __typename: 'Entry',
-  id: '648148c45e499cac399d7469',
-  name: 'hyrule bass',
-  description:
-    'An ordinary fish that can be found all over Hyrule. It can be eaten raw, but cooking it amplifies its healing benefits.',
-  commonLocations: ['Hyrule Field', 'West Necluda'],
-  image: {
-    __typename: 'Image',
-    id: '6481404648f035c00925fa17',
-    name: 'hyrule_bass',
-    src: 'https://res.cloudinary.com/jasonzou/image/upload/v1686074569/hyrule/hyrule_bass_xyjxwo.png',
-    height: 280,
-    width: 280,
-  },
-  category: {
-    __typename: 'Category',
-    id: '64813f316bbbf95ec21e3c1e',
-    name: 'food',
-  },
-  drops: [],
-  edible: true,
-  attack: null,
-  defense: null,
-  heartsRecovered: 1,
-  cookingEffect: '',
 }
 
 const ENTRIES = [
