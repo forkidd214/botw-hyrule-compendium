@@ -5,7 +5,9 @@ import Header from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Hyrule Compendium',
-  description: 'For Breath of Tthe Wild',
+  description: 'For Breath of the Wild',
+  manifest: '/manifest.json',
+  themeColor: '#020617',
 }
 
 const fontsVariables = Object.values(fonts)
