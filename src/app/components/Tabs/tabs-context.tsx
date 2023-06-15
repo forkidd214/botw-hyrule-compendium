@@ -24,14 +24,17 @@ const TabsProvider = ({
     setSelectedIndex,
     onSelectTab,
   }
+
   return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>
 }
 
 function useTabs() {
   const context = React.useContext(TabsContext)
+
   if (!context) {
     throw new Error(`useTabs must be used within a TabsProvider`)
   }
+
   return context
 }
 

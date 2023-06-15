@@ -32,6 +32,7 @@ const TabGroupImpl = ({
   className,
 }: TabGroupProps) => {
   const { selectedIndex } = useTabs()
+
   return (
     <Comp className={joinClassNames('', className)}>
       {typeof children === 'function' ? children({ selectedIndex }) : children}
@@ -41,8 +42,13 @@ const TabGroupImpl = ({
 
 function TabList({ as: Comp = 'div', children, className }: TabListProps) {
   let tabIndex = 0
+
   return (
-    <Comp className={joinClassNames('', className)}>
+    <Comp
+      role="tablist"
+      aria-label="tab list"
+      className={joinClassNames('', className)}
+    >
       {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child) && child.type === Tab) {
           const TabWithIndex = React.cloneElement(
@@ -76,8 +82,14 @@ function Tab({
   const { selectedIndex, onSelectTab } = useTabs()
   const isSelected = index === selectedIndex
   const htmlType = Comp === 'button' && !type ? 'button' : type
+
   return (
     <Comp
+      id={getTabsId('tab', index)}
+      aria-controls={getTabsId('tabpanel', index)}
+      aria-disabled={disabled}
+      role="tab"
+      aria-selected={isSelected ? 'true' : 'false'}
       onClick={() => onSelectTab(index)}
       type={htmlType}
       disabled={disabled}
@@ -90,6 +102,7 @@ function Tab({
 
 function TabPanels({ as: Comp = 'div', children, className }: TabPanelsProps) {
   let tabIndex = 0
+
   return (
     <Comp className={joinClassNames('', className)}>
       {React.Children.map(children, (child, index) => {
@@ -119,15 +132,26 @@ function TabPanel({
       'TabPanel must be used within TabPanels and must be the direct child of TabPanels'
     )
   }
+
   const { selectedIndex } = useTabs()
   const isSelected = index === selectedIndex
 
   return typeof children === 'function' ? (
-    <Comp className={joinClassNames('', className)}>
+    <Comp
+      id={getTabsId('tabpanel', index)}
+      aria-labelledby={getTabsId('tab', index)}
+      role="tabpanel"
+      className={joinClassNames('', className)}
+    >
       {typeof children === 'function' ? children({ isSelected }) : children}
     </Comp>
   ) : (
-    <Comp className={joinClassNames('', isSelected ? '' : 'hidden', className)}>
+    <Comp
+      id={getTabsId('tabpanel', index)}
+      aria-labelledby={getTabsId('tab', index)}
+      role="tabpanel"
+      className={joinClassNames('', isSelected ? '' : 'hidden', className)}
+    >
       {children}
     </Comp>
   )
@@ -142,3 +166,9 @@ Tab.Panels = TabPanels
 Tab.Panel = TabPanel
 
 export { Tab }
+
+///////////////////////////////////////////////////////
+// utils
+
+const getTabsId = (role: 'tab' | 'tabpanel', index: number) =>
+  `tabs-${role}-${index}` // TODO add real unique id

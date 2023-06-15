@@ -20,6 +20,7 @@ export default function Home() {
           width={96}
           height={96}
           alt="" // refer to adjacent text <Logo>Compendium</Logo>
+          priority
         />
         <Logo>Compendium</Logo>
       </Link>
