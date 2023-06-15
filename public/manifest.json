@@ -1,0 +1,23 @@
+{
+  "name": "Hyrule Compendium of Breath of the Wild",
+  "short_name": "Hyrule Compendium",
+  "start_url": "/",
+  "prefer_related_applications": true,
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "sizes": "192x192",
+      "src": "/icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/icons/android-chrome-512x512.png",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
