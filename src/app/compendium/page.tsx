@@ -6,11 +6,10 @@ import { useEntries } from '@/utils/entries-context'
 import EntryTabs from '@/components/EntryTabs'
 
 export default function Compendium() {
-  const {filteredEntries} = useEntries()
+  const { filteredEntries } = useEntries()
   const [entriesByCategoryList, setEntriesByCategoryList] = React.useState<
     Entry[][]
   >([])
-  const defferred = React.useDeferredValue(entriesByCategoryList)
 
   React.useEffect(() => {
     const entriesByCategoryMap: { [key: string]: Entry[] } = {
@@ -36,9 +35,7 @@ export default function Compendium() {
     setEntriesByCategoryList(Object.values(entriesByCategoryMap))
   }, [filteredEntries])
 
-  return (
-    <React.Suspense fallback={<h2>Loading...</h2>}>
-      <EntryTabs entriesByCategoryList={defferred} />
-    </React.Suspense>
-  )
+  return React.useMemo(() => {
+    return <EntryTabs entriesByCategoryList={entriesByCategoryList} />
+  }, [entriesByCategoryList])
 }

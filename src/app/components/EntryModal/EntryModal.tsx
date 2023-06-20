@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { type Entry } from '@/utils/entries'
 import Image from 'next/image'
 import Modal from '@/components/Modal'
@@ -23,24 +23,26 @@ export default function EntryModal({ entry }: EntryModalPropsType) {
     setIsOpen(false)
   }, [])
 
-  return (
-    <>
-      <ModalTrigger entry={entry} onOpen={openModal} />
-      <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
-        className={joinClassNames(
-          'mt-0  max-w-screen-sm p-4 text-inherit',
-          'rounded-md bg-slate-950 shadow-xl',
-          'backdrop:backdrop-blur-sm',
-          'sm:mt-auto',
-          'animate-[zoomIn_200ms_ease-in-out]'
-        )}
-      >
-        <EntryModalPanel entry={entry} onClose={closeModal} />
-      </Modal>
-    </>
-  )
+  return React.useMemo(() => {
+    return (
+      <>
+        <ModalTrigger entry={entry} onOpen={openModal} />
+        <Modal
+          isOpen={isOpen}
+          onClose={closeModal}
+          className={joinClassNames(
+            'mt-0  max-w-screen-sm p-4 text-inherit',
+            'rounded-md bg-slate-950 shadow-xl',
+            'backdrop:backdrop-blur-sm',
+            'sm:mt-auto',
+            'animate-[zoomIn_200ms_ease-in-out]'
+          )}
+        >
+          <EntryModalPanel isOpen={isOpen} entry={entry} onClose={closeModal} />
+        </Modal>
+      </>
+    )
+  }, [closeModal, entry, isOpen, openModal])
 }
 
 const ModalTrigger = ({ entry, onOpen }: ModalTriggerPropsType) => {
