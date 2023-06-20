@@ -12,10 +12,10 @@ type EntryTabsProps = {
 
 export default function EntryTabs({ entriesByCategoryList }: EntryTabsProps) {
   return (
-    <Tab.Group>
+    <Tab.Group className="flex h-full flex-col gap-2 overflow-hidden">
       <Tab.List
         className={joinClassNames(
-          'mx-auto mb-4 flex w-full max-w-sm items-stretch justify-between',
+          'mx-auto flex w-full max-w-sm items-stretch justify-between',
           'divide-x divide-yellow-50/20 rounded-md border border-yellow-50/20'
         )}
       >
@@ -40,7 +40,8 @@ export default function EntryTabs({ entriesByCategoryList }: EntryTabsProps) {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels>
+
+      <Tab.Panels className="flex-1 overflow-auto">
         {entriesByCategoryList.map((entriesByCategory, i) => (
           <Tab.Panel key={`category-${i}`}>
             <EntryModalGrid entries={entriesByCategory} />

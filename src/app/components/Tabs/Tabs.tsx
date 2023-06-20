@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import { joinClassNames } from '@/app/utils'
 import { TabsProvider, useTabs } from './tabs-context'
@@ -165,7 +167,7 @@ Tab.List = TabList
 Tab.Panels = TabPanels
 Tab.Panel = TabPanel
 
-export { Tab }
+export { Tab, TabGroup, TabList, TabPanels, TabPanel }
 
 ///////////////////////////////////////////////////////
 // utils

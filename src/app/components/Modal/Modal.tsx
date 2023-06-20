@@ -46,7 +46,7 @@ export default function Modal({
         !isClickedWithinDialog(e) && onClose()
       }}
       onClose={onClose}
-      className={`max-w-fit backdrop:bg-white/20  ${className}`}
+      className={`max-w-fit backdrop:bg-white/10  ${className}`}
     >
       {children}
     </dialog>
