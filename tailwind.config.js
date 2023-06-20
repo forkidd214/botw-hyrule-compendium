@@ -14,6 +14,12 @@ module.exports = {
         sheikah: ['var(--font-sheikah)', ...defaultTheme.fontFamily.mono],
         sans: ['var(--font-signika)', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(1)' },
+        }
+      }
     },
   },
   plugins: [],

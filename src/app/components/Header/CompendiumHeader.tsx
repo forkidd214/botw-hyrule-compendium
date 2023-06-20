@@ -1,8 +1,23 @@
+'use client'
+
+import * as React from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import Icon from '../Icon'
+import Icon from '@/components/Icon'
+import SearchBar from './SearchBar'
+import { joinClassNames } from '@/app/utils'
 
 export default function CompendiumHeader() {
+  const [isShowLogo, setIsShowLogo] = React.useState(true)
+
+  const handleSearchBarToggle = React.useCallback(
+    (isOpen: boolean) => {
+      const isMobile = window.innerWidth < 650
+      isMobile && setIsShowLogo(!isOpen)
+    },
+    [setIsShowLogo]
+  )
+
   return (
     <>
       <div className="flex items-center gap-1">
@@ -13,12 +28,17 @@ export default function CompendiumHeader() {
         >
           <Icon id="backward" />
         </Link>
-        <Logo>Compendium</Logo>
+        <div
+          className={joinClassNames(
+            isShowLogo ? 'block' : 'hidden',
+            'sm:block'
+          )}
+        >
+          <Logo>Compendium</Logo>
+        </div>
       </div>
-      <div className="ml-auto">
-        <button aria-label="search" className="h-12 w-12 rounded-sm p-2">
-          <Icon id="search" />
-        </button>
+      <div className="flex-auto sm:max-w-sm">
+        <SearchBar onToggle={handleSearchBarToggle} />
       </div>
     </>
   )
