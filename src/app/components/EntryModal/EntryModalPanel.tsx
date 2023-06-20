@@ -5,9 +5,13 @@ import Logo from '@/components/Logo'
 import Icon from '@/components/Icon'
 import { toPascalCase } from '@/app/utils'
 
-type ModalPanelPropsType = {
+type EntryModalPanelProps = {
   entry: Entry
   onClose?: () => void
+}
+
+type ModalContentProps = EntryModalPanelProps & {
+  isOpen: boolean
 }
 
 const VARIANTS: { [key: string]: { [key: string]: true | undefined } } = {
@@ -18,7 +22,15 @@ const VARIANTS: { [key: string]: { [key: string]: true | undefined } } = {
   monsters: { hasDrops: true },
 }
 
-export default function ModalPanel({ entry, onClose }: ModalPanelPropsType) {
+const ModalContent = React.memo(
+  ({ isOpen, entry, onClose }: ModalContentProps) => {
+    return <EntryModalPanel entry={entry} onClose={onClose} />
+  },
+  (prevProps, nextProps) => prevProps.isOpen === nextProps.isOpen
+)
+ModalContent.displayName = 'ModalContent'
+
+function EntryModalPanel({ entry, onClose }: EntryModalPanelProps) {
   const {
     category,
     name,
@@ -28,12 +40,6 @@ export default function ModalPanel({ entry, onClose }: ModalPanelPropsType) {
     attack,
     defense,
   } = entry
-
-  try {
-    const { hasDrops } = VARIANTS[category.name]
-  } catch (err) {
-    console.error({ category })
-  }
 
   const {
     hasDrops,
@@ -146,9 +152,13 @@ const CommonLocationsSection = ({
   return (
     <FeatureSection title="common locations">
       <ul className="columns-2">
-        {commonLocations.map((location) => (
-          <li key={location}>{toPascalCase(location)}</li>
-        ))}
+        {commonLocations.length === 0 ? (
+          <li>none</li>
+        ) : (
+          commonLocations.map((location) => (
+            <li key={location}>{toPascalCase(location)}</li>
+          ))
+        )}
       </ul>
     </FeatureSection>
   )
@@ -158,9 +168,11 @@ const DropsSection = ({ drops }: { drops: string[] }) => {
   return (
     <FeatureSection title="drops">
       <ul className="columns-2">
-        {drops.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
+        {drops.length === 0 ? (
+          <li>none</li>
+        ) : (
+          drops.map((item) => <li key={item}>{item}</li>)
+        )}
       </ul>
     </FeatureSection>
   )
@@ -198,3 +210,5 @@ const EquipmentSection = ({
     </FeatureSection>
   )
 }
+
+export default ModalContent
