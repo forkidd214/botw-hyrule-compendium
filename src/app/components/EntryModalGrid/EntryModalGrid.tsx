@@ -11,7 +11,7 @@ export default function EntryModalGrid({ entries }: EntryModalGridProps) {
   return (
     <div className="grid max-w-full auto-rows-[72px] grid-cols-[repeat(auto-fit,minmax(min(250px,100%),1fr))] gap-2 p-1">
       {entries.map((entry) => (
-        <EntryModal key={`modal-${entry.id}`} entry={entry} />
+        <EntryModal key={`entry-modal-${entry.id}`} entry={entry} />
       ))}
     </div>
   )

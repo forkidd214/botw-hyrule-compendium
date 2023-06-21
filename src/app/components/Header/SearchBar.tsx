@@ -14,9 +14,24 @@ export default function SearchBar({ onToggle }: SearchBarProps) {
   const { entries, setFilteredEntries } = useEntries()
   const [isOpen, setIsOpen] = React.useState(false)
   const [searchTerm, setSearchTerm] = React.useState('')
-  const deferredSearchTerm = React.useDeferredValue(searchTerm)
+  const [_, startTransition] = React.useTransition()
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [isInitialRender, setIsInitialRender] = React.useState(true)
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newInput = e.target.value
+    setSearchTerm(newInput)
+
+    startTransition(() => {
+      const filteredEntries: Entry[] =
+        newInput === ''
+          ? entries
+          : entries.filter(({ name }) =>
+              name.toLowerCase().includes(newInput.toLowerCase())
+            )
+      setFilteredEntries(filteredEntries)
+    })
+  }
 
   /**
    * initial render: do nothing
@@ -38,23 +53,6 @@ export default function SearchBar({ onToggle }: SearchBarProps) {
     }
   }, [isOpen, onToggle, setFilteredEntries, entries, isInitialRender])
 
-  /**
-   * when is closed: do nothing
-   * on typing searchTerm: set defferred filtered entries to context
-   */
-  React.useEffect(() => {
-    if (!isOpen) return undefined
-
-    const filteredEntries: Entry[] =
-      deferredSearchTerm === ''
-        ? entries
-        : entries.filter(({ name }) =>
-            name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
-          )
-
-    setFilteredEntries(filteredEntries)
-  }, [isOpen, entries, setFilteredEntries, deferredSearchTerm])
-
   return (
     <label className="relative block w-full">
       <span className="sr-only">Search</span>
@@ -64,7 +62,7 @@ export default function SearchBar({ onToggle }: SearchBarProps) {
         name="search"
         ref={inputRef}
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleInputChange}
         autoComplete="off"
         className={joinClassNames(
           isOpen ? 'block' : 'hidden',
