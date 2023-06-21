@@ -5,12 +5,13 @@
   "author": "Jason F. ZOU",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
+    "build": "pnpm run prisma:generate && next build",
     "start": "next start -p 3000",
     "lint": "next lint",
     "test": "glob -c \"node --loader tsx --no-warnings --test --watch\" \"**/?(*.)+(spec|test).[jt]s?(x)\" \"**/__tests__/**/*.[jt]s?(x)\" ",
     "prisma:seed": "pnpm exec prisma db seed",
-    "prisma:studio": "pnpm exec prisma studio"
+    "prisma:studio": "pnpm exec prisma studio",
+    "prisma:generate": "pnpm exec prisma generate"
   },
   "prisma": {
     "schema": "src/app/lib/prisma/schema.prisma",

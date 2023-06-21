@@ -3,6 +3,15 @@ import { createYoga, createSchema } from 'graphql-yoga'
 import prisma from '@/app/lib/prisma/db'
 
 const { handleRequest } = createYoga({
+  cors: {
+    origin: process.env.SERVER_HOST
+      ? `https://${process.env.SERVER_HOST}`
+      : 'http://localhost:3000',
+    credentials: true,
+    allowedHeaders: ['X-Custom-Header'],
+    methods: ['POST'],
+  },
+
   schema: createSchema({
     typeDefs: /* GraphQL */ `
       type Category {
