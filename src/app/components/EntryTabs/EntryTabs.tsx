@@ -34,6 +34,7 @@ export default function EntryTabs({ entriesByCategoryList }: EntryTabsProps) {
                   src={imageSrc}
                   width={imageSize}
                   height={imageSize}
+                  priority
                 />
               </div>
             )}
