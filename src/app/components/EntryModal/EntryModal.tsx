@@ -66,6 +66,7 @@ const ModalTrigger = ({ entry, onOpen }: ModalTriggerPropsType) => {
             fill
             sizes={image.width + 'px'}
             className="object-cover"
+            priority
           />
         </div>
         <figcaption id={id} className="text-left text-xl font-medium">
