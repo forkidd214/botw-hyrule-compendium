@@ -13,6 +13,10 @@ export const { getClient } = registerApolloClient(() => {
       // you can disable result caching here if you want to
       // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
       // fetchOptions: { cache: "no-store" },
+
+      // only fetch data at build time
+      // [nextjs-extended fetch](https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate)
+      fetchOptions: { next: { revalidate: false } },
     }),
   })
 })
