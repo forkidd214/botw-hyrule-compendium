@@ -1,10 +1,9 @@
-import { expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Page from '../app/page'
 
-test('Page', () => {
+test('Home page', () => {
   render(<Page />)
   expect(
-    screen.getByRole('heading', { level: 1, name: 'Compendium' })
-  ).toBeDefined()
+    screen.getByRole('heading', { level: 1, name: /Compendium/i })
+  ).toBeInTheDocument()
 })

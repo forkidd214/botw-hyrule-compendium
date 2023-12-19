@@ -24,7 +24,8 @@
       "@/lib/*": ["./src/app/lib/*"],
       "@/components/*": ["./src/app/components/*"],
       "@/utils/*": ["./src/app/utils/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
