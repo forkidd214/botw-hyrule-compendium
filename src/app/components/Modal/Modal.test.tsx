@@ -1,5 +1,4 @@
-import userEvent from '@testing-library/user-event'
-import { screen, within, render, act, cleanup } from '@testing-library/react'
+import { screen, within, render, userEvent } from '@/test/app-test-utils'
 import Modal from './Modal'
 
 describe('Modal', () => {
@@ -33,19 +32,21 @@ describe('Modal', () => {
     vi.clearAllMocks() // otherwise, mock function calling times accumulate
   })
 
-  const renderModal = ({
+  const renderModal = async ({
     isOpen = false,
     handleClose = vi.fn(),
   }: {
     isOpen?: boolean
     handleClose?: () => void
   } = {}) => {
+    const renderResult = await render(
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <div>modal content</div>
+      </Modal>
+    )
+
     return {
-      ...render(
-        <Modal isOpen={isOpen} onClose={handleClose}>
-          <div>modal content</div>
-        </Modal>
-      ),
+      ...renderResult,
       handleClose,
       modal: screen.getByRole('dialog', { hidden: true }) as HTMLDialogElement,
       modalContent: within(
@@ -54,15 +55,15 @@ describe('Modal', () => {
     }
   }
 
-  it('hides its children when closed', () => {
-    const { modal, modalContent } = renderModal()
+  it('hides its children when closed', async () => {
+    const { modal, modalContent } = await renderModal()
     expect(modalContent).toBeInTheDocument()
     expect(modal.showModal).toBeCalledTimes(0)
     expect(modal.close).toBeCalledTimes(1)
   })
 
-  it('shows its children when opend', () => {
-    const { modal, modalContent } = renderModal({ isOpen: true })
+  it('shows its children when opend', async () => {
+    const { modal, modalContent } = await renderModal({ isOpen: true })
     expect(modalContent).toBeInTheDocument()
     expect(modal.showModal).toBeCalledTimes(1)
     expect(modal.close).toBeCalledTimes(0)
@@ -71,7 +72,7 @@ describe('Modal', () => {
   it('calls onClose callback only on outside click', async () => {
     // Arrange
     const user = userEvent.setup()
-    const { modal, handleClose } = renderModal({ isOpen: true })
+    const { modal, handleClose } = await renderModal({ isOpen: true })
     // Act
     await user.pointer({ coords: INSIDE_DIALOG })
     await user.click(modal)

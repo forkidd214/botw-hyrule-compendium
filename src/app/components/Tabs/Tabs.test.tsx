@@ -1,6 +1,4 @@
-import { screen, render, within } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
-
+import { screen, render, userEvent } from '@/test/app-test-utils'
 import { Tab } from './index'
 
 describe('Tabs', () => {
@@ -9,8 +7,8 @@ describe('Tabs', () => {
   let tabs: HTMLElement[] = Array(TAB_COUNT).fill(undefined)
   let panels: HTMLElement[] = Array(TAB_COUNT).fill(undefined)
 
-  beforeEach(() => {
-    render(
+  beforeEach(async () => {
+    await render(
       <Tab.Group defaultIndex={DEFAULT_INDEX}>
         <Tab.List>
           {Array(TAB_COUNT)

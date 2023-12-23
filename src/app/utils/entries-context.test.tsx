@@ -1,17 +1,10 @@
-import { act, renderHook } from '@testing-library/react'
-import React, { ReactNode } from 'react'
+import { withProps, act, renderHook } from '@/test/app-test-utils'
 
 import { EntriesProvider, useEntries } from './entries-context'
-import { MOCK_ENTRIES } from '@/__tests__/MOCK_ENTRIES'
+import * as entriesDB from '@/test/data/entries'
+import { buildEntry } from '@/test/generate'
 
 describe('entries-context', () => {
-  // HOC for custom provider with custom props
-  const withProps = (Comp: React.ComponentType<any>, props: any) => {
-    return function CompWithProps({ children }: { children: ReactNode }) {
-      return <Comp {...props}>{children}</Comp>
-    }
-  }
-
   it('renders default empty array when no entries provided', () => {
     const { result } = renderHook(() => useEntries(), {
       wrapper: EntriesProvider,
@@ -21,23 +14,36 @@ describe('entries-context', () => {
     expect(result.current.entries).toHaveLength(0)
   })
 
-  it('renders initial entries from provider', () => {
+  it('renders initial entries from provider', async () => {
     const { result } = renderHook(() => useEntries(), {
-      wrapper: withProps(EntriesProvider, { entries: MOCK_ENTRIES }),
+      wrapper: withProps(EntriesProvider, {
+        entries: await entriesDB.readManyByName(),
+      }),
     })
 
     expect(result.current.entries).toEqual(result.current.filteredEntries)
-    expect(result.current.entries).toEqual(MOCK_ENTRIES)
+    expect(result.current.entries).toEqual(await entriesDB.readManyByName())
   })
 
-  it('provides a callback to modify filtered entries', () => {
+  it('provides a callback to modify filtered entries', async () => {
     // Arrange
+    const COMMON_NAME = 'dog'
+    const newEntries: any[] = [
+      buildEntry({ name: `a ${COMMON_NAME}` }),
+      buildEntry({ name: `a little ${COMMON_NAME}` }),
+      buildEntry({ name: `many lovely ${COMMON_NAME}s` }),
+    ]
+    await Promise.all(newEntries.map((entry) => entriesDB.create(entry)))
     const { result } = renderHook(() => useEntries(), {
-      wrapper: withProps(EntriesProvider, { entries: MOCK_ENTRIES }),
+      wrapper: withProps(EntriesProvider, {
+        entries: await entriesDB.readManyByName(),
+      }),
     })
-    const newEntries: any[] = []
 
     // Assert
+    newEntries.forEach((entry) =>
+      expect(result.current.filteredEntries).toContain(entry)
+    )
     expect(result.current.filteredEntries).not.toEqual(newEntries)
 
     // Act
