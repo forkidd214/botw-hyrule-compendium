@@ -9,6 +9,7 @@ const withProps = (Comp: React.ComponentType<any>, props: any) => {
   }
 }
 
+// default render with providers
 async function render(
   ui: React.ReactElement,
   {
@@ -29,5 +30,39 @@ async function render(
   })
 }
 
+// enable operations on a dialog element, for jsdom doesn't support yet
+const MOCK_DIALOG_CLIENT_RECT = {
+  x: 100,
+  y: 50,
+  width: 100,
+  height: 100,
+}
+const getDialogClientRect = () => ({
+  ...MOCK_DIALOG_CLIENT_RECT,
+  top: MOCK_DIALOG_CLIENT_RECT.y,
+  left: MOCK_DIALOG_CLIENT_RECT.x,
+  right: MOCK_DIALOG_CLIENT_RECT.x + MOCK_DIALOG_CLIENT_RECT.width,
+  bottom: MOCK_DIALOG_CLIENT_RECT.y + MOCK_DIALOG_CLIENT_RECT.height,
+})
+const getDialogPointerCoords = ({
+  isWithin = true,
+}: { isWithin?: boolean } = {}) => {
+  return isWithin
+    ? {
+        clientX: MOCK_DIALOG_CLIENT_RECT.x + MOCK_DIALOG_CLIENT_RECT.width / 2,
+        clientY: MOCK_DIALOG_CLIENT_RECT.y + MOCK_DIALOG_CLIENT_RECT.height / 2,
+      }
+    : {
+        clientX: MOCK_DIALOG_CLIENT_RECT.x - 100,
+        clientY: MOCK_DIALOG_CLIENT_RECT.y - 50,
+      }
+}
+
 export * from '@testing-library/react'
-export { withProps, render, userEvent }
+export {
+  withProps,
+  render,
+  userEvent,
+  getDialogClientRect,
+  getDialogPointerCoords,
+}

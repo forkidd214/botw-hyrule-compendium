@@ -1,5 +1,13 @@
 import { faker } from '@faker-js/faker'
 
+export const CATEGORIES = [
+  'animals',
+  'food',
+  'monsters',
+  'materials',
+  'equipment',
+]
+
 export function buildEntry(overrides: any = null) {
   return {
     id: faker.string.uuid(),
@@ -15,9 +23,7 @@ export function buildEntry(overrides: any = null) {
     },
     category: {
       id: faker.string.uuid(),
-      name: ['animals', 'food', 'monsters', 'materials', 'equipment'][
-        Math.floor(Math.random() * 5)
-      ],
+      name: CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)],
     },
 
     drops: faker.lorem.words().split(' '),

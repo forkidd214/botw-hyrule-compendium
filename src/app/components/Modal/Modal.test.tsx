@@ -1,37 +1,14 @@
-import { screen, within, render, userEvent } from '@/test/app-test-utils'
+import {
+  screen,
+  within,
+  render,
+  userEvent,
+  getDialogPointerCoords,
+} from '@/test/app-test-utils'
 import Modal from './Modal'
 
 describe('Modal', () => {
   // Arrange
-  const OUTSIDE_DIALOG = {
-    clientX: 0,
-    clientY: 0,
-  }
-  const INSIDE_DIALOG = {
-    clientX: 200,
-    clientY: 100,
-  }
-
-  beforeAll(() => {
-    HTMLDialogElement.prototype.showModal = vi.fn()
-    HTMLDialogElement.prototype.close = vi.fn()
-    HTMLDialogElement.prototype.getBoundingClientRect = vi.fn(() => ({
-      toJSON: () => {},
-      x: INSIDE_DIALOG.clientX - 100,
-      y: INSIDE_DIALOG.clientY - 50,
-      width: 200,
-      height: 100,
-      top: INSIDE_DIALOG.clientY - 50,
-      left: INSIDE_DIALOG.clientX - 100,
-      right: INSIDE_DIALOG.clientX + 100,
-      bottom: INSIDE_DIALOG.clientY + 50,
-    }))
-  })
-
-  afterEach(() => {
-    vi.clearAllMocks() // otherwise, mock function calling times accumulate
-  })
-
   const renderModal = async ({
     isOpen = false,
     handleClose = vi.fn(),
@@ -74,14 +51,14 @@ describe('Modal', () => {
     const user = userEvent.setup()
     const { modal, handleClose } = await renderModal({ isOpen: true })
     // Act
-    await user.pointer({ coords: INSIDE_DIALOG })
+    await user.pointer({ coords: getDialogPointerCoords({ isWithin: true }) })
     await user.click(modal)
     // Assert
     expect(handleClose).toBeCalledTimes(0)
     // Act
-    await user.pointer({ coords: OUTSIDE_DIALOG })
+    await user.pointer({ coords: getDialogPointerCoords({ isWithin: false }) })
     await user.click(modal)
     // Assert
-    expect(modal.showModal).toBeCalledTimes(1)
+    expect(handleClose).toBeCalledTimes(1)
   })
 })
