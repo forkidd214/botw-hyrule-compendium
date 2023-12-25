@@ -14,7 +14,7 @@ async function render(
   ui: React.ReactElement,
   {
     route = '/',
-    providerProps,
+    providerProps = { entries: [] },
     ...renderOptions
   }: {
     route?: string
@@ -61,6 +61,7 @@ const getDialogPointerCoords = ({
 export * from '@testing-library/react'
 export {
   withProps,
+  rtlRender,
   render,
   userEvent,
   getDialogClientRect,

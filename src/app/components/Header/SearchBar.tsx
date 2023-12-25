@@ -73,7 +73,7 @@ export default function SearchBar({ onToggle }: SearchBarProps) {
       />
       <span className="absolute inset-y-0 right-0 flex items-center">
         <button
-          aria-label="search"
+          aria-label={isOpen ? 'close' : 'search'}
           className="h-12 w-12 p-3"
           onClick={() => setIsOpen((isOpen) => !isOpen)}
         >
